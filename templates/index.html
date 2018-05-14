@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>文件下载页面</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            max-width: 300px;
+            text-align: left;
+        }
+
+
+        table {
+            table-layout: fixed;
+            empty-cells: show;
+            border-collapse: collapse;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        th {
+            color: black;
+            text-align: left;
+            font-size: 30px;
+            font-family: "Microsoft YaHei";
+        }
+
+        td {
+            margin: 30px 5;
+            word-wrap: break-word;
+            font-size: 20px;
+            transition: 2s;
+        }
+
+        td,
+        .index {
+            font-family: "Microsoft YaHei";
+        }
+
+        body {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .dir {
+            color: blue;
+        }
+
+        .file {
+            color: red;
+        }
+
+        .type {
+            width: 300px;
+            text-align: center;
+        }
+
+        .sorry {
+            color: green;
+            font-family: "Microsoft YaHei";
+            font-size: 70px;
+            transition: 1s;
+            text-align: center;
+        }
+
+        .sorry:hover {
+            transform: scale(0.5, 0.5);
+        }
+
+        td:hover {
+            transform: scaleY(2);
+        }
+
+        a {
+            color: chocolate;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: deeppink;
+            text-decoration: underline;
+
+        }
+
+        .pwd {
+            font-size: 16px;
+            color: chartreuse;
+        }
+
+        .name {
+            width: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        <a href="{{url_for('index')}}">文件下载主页</a>
+    </h1>
+    {% if haspre %}
+    <h2>
+        <p class="pwd">当前目录：{{pwd}}</p>
+        <a href="{{url_for('show',v=pre)}}">返回上一级目录</a>
+    </h2>
+    {% endif %} {% if dir|length > 0 %}
+    <table>
+        <tr>
+            <th class="name">名称</th>
+            <th class="type">类型</th>
+        </tr>
+        {% for i in dir %}
+        <tr>
+            {% if isdir(h[loop.index - 1])%}
+            <td class="name">
+                <span class="dir">{{ loop.index }}.</span>
+                <a class="dir" href="{{ url_for('show',v=h[loop.index - 1]) }}">{{ i }}</a>
+            </td>
+            <td class="dir type">
+                文件夹
+            </td>
+            {% else %}
+
+            <td class="name file">
+                <span class="file">{{ loop.index }}.</span>
+                <a class="file" href="{{ h[loop.index - 1][:-1]}}" download="{{ i }}">{{ i }}
+                </a>
+            </td>
+            <td class="file type">
+                文件
+            </td>
+
+            {% endif %} </tr>{% endfor %}
+    </table>
+    {% else %}
+    <p class="sorry">Sorry,There is nothing!</p>
+    {% endif %}
+</body>
+
+</html>
