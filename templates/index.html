@@ -31,7 +31,7 @@
         }
 
         td {
-            margin: 30px 5;
+            margin: 30px 20px;
             word-wrap: break-word;
             font-size: 20px;
             transition: 2s;
@@ -48,12 +48,12 @@
         }
 
         .dir {
-            color:palevioletred;
+            color: palevioletred;
             font-weight: bold;
         }
 
         .file {
-            color:blue;
+            color: blue;
         }
 
         .type {
@@ -98,13 +98,26 @@
         }
 
         .upload {
+            margin-top: 100px;
             width: 100%;
-            text-align: left;
+            height: 100px;
+            text-align: center;
         }
 
         input[type="submit"] {
-            border-radius: 25px;
-            background: plum;
+            width: 70px;
+            height: 70px;
+            border-radius: 35px;
+            color: mediumseagreen;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 3s;
+        }
+
+        input[type="submit"]:hover {
+            transform: rotate(1440deg);
+            background: mediumseagreen;
+            color: none;
         }
 
         .msg {
@@ -115,8 +128,42 @@
             color: red;
             transition: 2s;
         }
-        .msg:hover{
+
+        .msg:hover {
             transform: rotate(360deg);
+        }
+
+        .upload-file {
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            color: coral;
+            border: 1px solid tan;
+            border-radius: 4px;
+            overflow: hidden;
+            text-decoration: none;
+            line-height: 60px;
+            transition: 2s;
+            cursor: pointer;
+        }
+
+        .upload-file input {
+            width: 70px;
+            height: 50px;
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-file:hover {
+            background: coral;
+            transform: rotate(-1440deg);
+            color: cornflowerblue;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -165,10 +212,19 @@
     <p class="msg">{{msg}}</p>
     {% endif%}
     <div class="upload">
-        <form action="{{url_for('upload', v=v)}}" enctype="multipart/form-data" method="POST">
-            <input type="file" name="file">
-            <input type="submit" value="上传">
-        </form>
+        <fieldset>
+            <legend>文件上传</legend>
+            <form action="{{url_for('upload', v=v)}}" enctype="multipart/form-data" method="POST">
+                <a href="javascript:;" class="upload-file">
+                    选择文件
+                    <input type="file" name="file">
+                </a>
+                <div>
+                    <input type="submit" value="上传">
+                </div>
+            </form>
+        </fieldset>
+
     </div>
 </body>
 
